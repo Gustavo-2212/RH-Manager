@@ -24,13 +24,7 @@
 
         </form>
 
-        @if(session("error"))
-            <div class="alert alert-danger mt-3">
-                {{ session("error") }}
-            </div>
-        @endif
-
-        @if(session("success"))
+        @if(session("success_change_data"))
             <div class="alert alert-success mt-3">
                 {{ session("success") }}
             </div>

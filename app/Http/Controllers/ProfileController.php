@@ -35,8 +35,8 @@ class ProfileController extends Controller
     public function change_data(Request $request)
     {
         $request->validate([
-            "name" => ["required"],
-            "email" => ["email", "unique:users,email"]
+            "name" => ["required", "min:3", "max:255"],
+            "email" => ["required", "email", "max:255", "unique:users,email," . auth()->id()]
         ]);
 
         $user = auth()->user();
