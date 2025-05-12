@@ -3,6 +3,7 @@
 use App\Http\Controllers\RHUserController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ConfirmAccountController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
@@ -35,4 +36,7 @@ Route::middleware("auth")->group(function () {
 
 Route::middleware("guest")->group(function () {
     Route::redirect("/", "login", 301);
+
+    Route::get("/confirm_account/{token}", [ConfirmAccountController::class, "confirm_account"])->name("confirm_account");
+    Route::post("/confirm_account", [ConfirmAccountController::class, "confirm_account_submit"])->name("confirm_account_submit");
 });

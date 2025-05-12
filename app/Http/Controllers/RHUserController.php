@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Mail\ConfirmAccountEmail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use App\Models\Department;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Mail;
 
 class RHUserController extends Controller
 {
@@ -51,6 +54,7 @@ class RHUserController extends Controller
         $user = new User();
         $user["name"] = $request["name"];
         $user["email"] = $request["email"];
+        $user["confirmation_token"] = Str::random(60);
         $user["role"] = "rh";
         $user["department_id"] = $request["select_department"];
         $user["permissions"] = '["rh"]';
@@ -65,6 +69,8 @@ class RHUserController extends Controller
             "salary" => $request["salary"],
             "admission_date" => $request["admission_date"]
         ]);
+        
+        Mail::to($user["email"])->send(new ConfirmAccountEmail( route("confirm_account", $user["confirmation_token"]) ));
 
         return redirect()->route("rh_users")->with("success", "Colaborador adicionado com sucesso");
     }

@@ -1,4 +1,4 @@
-<x-layout-guest pageTitle="Login">
+<x-layout-guest pageTitle="Criação de senha">
 
     <div class="container mt-5">
         <div class="row justify-content-center">
@@ -8,17 +8,10 @@
                 </div>
 
                 <div class="card p-5">
-                    <form action="{{ route("login") }}" method="POST">
+                    <form action="{{ route("confirm_account_submit") }}" method="POST">
                         @csrf
 
-                        <div class="mb-3">
-                            <label for="email">E-mail</label>
-                            <input type="email" class="form-control" name="email" id="email">
-
-                            @error("email")
-                                <div class="text-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
+                        <input type="hidden" id="token" name="token" value="{{ $user->confirmation_token }}" >
 
                         <div class="mb-3">
                             <label for="password">Senha</label>
@@ -29,9 +22,17 @@
                             @enderror
                         </div>
 
-                        <div class="d-flex justify-content-between align-items center">
-                            <a href="{{ route("password.request") }}">Esqueceu sua senha?</a>
-                            <button type="submit" class="btn btn-primary px-4">Login</button>
+                        <div class="mb-3">
+                            <label for="password_confirmation">Confirmar Senha</label>
+                            <input type="password" name="password_confirmation" id="password_confirmation" class="form-control">
+
+                            @error("password_confirmation")
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="d-flex justify-content-end align-items center">
+                            <button type="submit" class="btn btn-primary px-4">Confirmar</button>
                         </div>
                     </form>
 
@@ -48,3 +49,4 @@
     </div>
 
 </x-layout-guest>
+
