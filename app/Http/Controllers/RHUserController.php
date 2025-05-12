@@ -1,0 +1,117 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
+use App\Models\Department;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+
+class RHUserController extends Controller
+{
+    public function index(): View
+    {
+        Auth::user()->can("admin") ?: abort(403, "Você não tem permissão");
+
+        // $colaborators = User::where("role", "rh")->get();
+        $colaborators = User::with("detail")->where("role", "rh")->get();
+        
+        return view("colaborators.rh-user", ["colaborators" => $colaborators]);
+    }
+
+    public function add_colaborator(): View
+    {
+        Auth::user()->can("admin") ?: abort(403, "Você não tem permissão");
+
+        $departments = Department::all();
+
+        return view("colaborators.add-rh-user", ["departments" => $departments]);
+    }
+
+    public function create_colaborator(Request $request): RedirectResponse
+    {
+        Auth::user()->can("admin") ?: abort(403, "Você não tem permissão");
+
+        $request->validate([
+            "name" => ["required", "min:3", "max:255"],
+            "email" => ["required", "email", "min:3", "max:255", "unique:users,email"],
+            "select_department" => ["required", "exists:departments,id"],
+            "address" => ["required", "string", "max:250"],
+            "zip_code" => ["required", "string", "max:10"],
+            "city" => ["required", "string", "max:50"],
+            "phone" => ["required", "string", "max:50"],
+            "salary" => ["required", "decimal:2"],
+            "admission_date" => ["required", "date_format:Y-m-d"]
+        ]);
+        
+
+        $user = new User();
+        $user["name"] = $request["name"];
+        $user["email"] = $request["email"];
+        $user["role"] = "rh";
+        $user["department_id"] = $request["select_department"];
+        $user["permissions"] = '["rh"]';
+        
+        $user->save();
+
+        $user->detail()->create([
+            "address" => $request["address"],
+            "zip_code" => $request["zip_code"],
+            "city" => $request["city"],
+            "phone" => $request["phone"],
+            "salary" => $request["salary"],
+            "admission_date" => $request["admission_date"]
+        ]);
+
+        return redirect()->route("rh_users")->with("success", "Colaborador adicionado com sucesso");
+    }
+
+    public function edit_rh_user($id)
+    {
+        Auth::user()->can("admin") ?: abort(403, "Você não tem permissão");
+
+        $colaborator = User::with("detail")->where("role", "rh")->findOrFail($id);
+
+        return view("colaborators.edit-rh-user", ["colaborator" => $colaborator]);
+    }
+
+    public function update_rh_user(Request $request)
+    {
+        $request->validate([
+            "id" => ["required", "exists:users,id"],
+            "salary" => ["required", "decimal:2"],
+            "admission_date" => ["required", "date_format:Y-m-d"]
+        ]);
+
+        $user = User::findOrFail($request["id"]);
+
+        $user->detail->update([
+            "salary" => $request["salary"],
+            "admission_date" => $request["admission_date"]
+        ]);
+
+        return redirect()->route("rh_users")->with(["success" => "Edição bem-sucedida do usuário"]);
+    }
+
+    public function delete_rh_user($id)
+    {
+        Auth::user()->can("admin") ?: abort(403, "Você não tem permissão");
+
+        $colaborator = User::findOrFail($id);
+
+        return view("colaborators.delete-rh-user", ["colaborator" => $colaborator]);
+    }
+
+    public function delete_rh_user_confirm($id)
+    {
+        Auth::user()->can("admin") ?: abort(403, "Você não tem permissão");
+
+        $colaborator = User::findOrFail($id);
+        $colaborator->delete();
+
+        return redirect()->route("rh_users")->with(["success" => "Deleção de usuário bem-sucedida"]);
+    }
+}

@@ -49,7 +49,7 @@ class DepartmentController extends Controller
     {
         Auth::user()->can("admin") ?: abort(403, "Você não tem permissão");
 
-        if(intval($id) === 1) return redirect()->route("departments");
+        if(intval($id) <= 2) return redirect()->route("departments");
 
         $department = Department::findOrFail($id);
 
@@ -65,7 +65,7 @@ class DepartmentController extends Controller
             "name" => ["required", "min:3", "max:255", "unique:departments,name," . $request["id"]]
         ]);
 
-        if(intval($request["id"]) === 1) return redirect()->route("departments");
+        if(intval($request["id"]) <= 2) return redirect()->route("departments");
 
         $department = Department::findOrFail($request["id"]);
 
@@ -79,7 +79,7 @@ class DepartmentController extends Controller
     {
         Auth::user()->can("admin") ?: abort("Você não tem permissão");
 
-        if(intval($id) === 1) return redirect()->route("departments");
+        if(intval($id) <= 2) return redirect()->route("departments");
 
         $department = Department::findOrFail($id);
 
@@ -90,7 +90,7 @@ class DepartmentController extends Controller
     {
         Auth::user()->can("admin") ?: abort(403, "Você não tem permissão");
 
-        if(intval($id) === 1) return redirect()->route("departments");
+        if(intval($id) <= 2) return redirect()->route("departments");
 
         $department = Department::findOrFail($id);
         $department->delete();

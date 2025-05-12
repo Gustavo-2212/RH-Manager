@@ -8,6 +8,8 @@ use Illuminate\Notifications\Notifiable;
 class User extends Authenticable
 {
 
+    protected $fillable = ["name", "email", "profile", "role"];
+
     use Notifiable; // Para receber emails
 
     public function detail()

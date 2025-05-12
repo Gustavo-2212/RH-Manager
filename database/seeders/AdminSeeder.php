@@ -43,5 +43,11 @@ class AdminSeeder extends Seeder
             "created_at" => Carbon::now(),
             "updated_at" => Carbon::now()
         ]);
+        
+        DB::table("departments")->insert([
+            "name" => "Recursos Homanos",
+            "created_at" => Carbon::now(),
+            "updated_at" => Carbon::now()
+        ]);
     }
 }

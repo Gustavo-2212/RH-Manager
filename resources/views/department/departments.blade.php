@@ -8,8 +8,8 @@
 
         @if($departments->count() === 0)
             <div class="text-center my-5">
-                <p>No departments found.</p>
-                <a href="{{ route("department.add_department") }}" class="btn btn-primary">Create a new department</a>
+                <p>Nenhum departamento encontrado.</p>
+                <a href="{{ route("department.add_department") }}" class="btn btn-primary">Criar um novo departamento</a>
             </div>
         @else
             <hr>
@@ -29,7 +29,8 @@
                             <td>[{{ $department["name"] }}]</td>
                             <td>
                                 <div class="d-flex gap-3 justify-content-end">
-                                    @if($department["id"] === 1 && $department["name"] === "Administração")
+                                    {{-- @if($department["id"] === 1 && $department["name"] === "Administração") --}}
+                                    @if(in_array($department["id"], [1,2]))
                                         <i class="fa-solid fa-lock"></i>
                                     @else
                                         <a href="{{ route("department.edit_department", ["id" => $department["id"]]) }}" class="btn btn-sm btn-outline-dark"><i class="fa-regular fa-pen-to-square me-2"></i>Editar</a>
