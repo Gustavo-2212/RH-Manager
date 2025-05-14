@@ -20,8 +20,8 @@ class RHUserController extends Controller
         Auth::user()->can("admin") ?: abort(403, "Você não tem permissão");
 
         // $colaborators = User::where("role", "rh")->get();
-        $colaborators = User::with("detail")->where("role", "rh")->get();
-        
+        $colaborators = User::withTrashed()->with("detail")->where("role", "rh")->get();
+
         return view("colaborators.rh-user", ["colaborators" => $colaborators]);
     }
 
@@ -49,7 +49,7 @@ class RHUserController extends Controller
             "salary" => ["required", "decimal:2"],
             "admission_date" => ["required", "date_format:Y-m-d"]
         ]);
-        
+
 
         $user = new User();
         $user["name"] = $request["name"];
@@ -58,7 +58,7 @@ class RHUserController extends Controller
         $user["role"] = "rh";
         $user["department_id"] = $request["select_department"];
         $user["permissions"] = '["rh"]';
-        
+
         $user->save();
 
         $user->detail()->create([
@@ -69,7 +69,7 @@ class RHUserController extends Controller
             "salary" => $request["salary"],
             "admission_date" => $request["admission_date"]
         ]);
-        
+
         Mail::to($user["email"])->send(new ConfirmAccountEmail( route("confirm_account", $user["confirmation_token"]) ));
 
         return redirect()->route("rh_users")->with("success", "Colaborador adicionado com sucesso");
@@ -119,5 +119,15 @@ class RHUserController extends Controller
         $colaborator->delete();
 
         return redirect()->route("rh_users")->with(["success" => "Deleção de usuário bem-sucedida"]);
+    }
+
+    public function restore_rh_user($id)
+    {
+        Auth::user()->can("admin") ?: abort(403, "Você não tem permissão");
+
+        $colaborator = User::withTrashed()->where("role", "rh")->findOrFail($id);
+        $colaborator->restore();
+
+        return redirect()->route("rh_users");
     }
 }

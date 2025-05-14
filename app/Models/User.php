@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticable;
 use Illuminate\Notifications\Notifiable;
 
@@ -11,6 +12,7 @@ class User extends Authenticable
     protected $fillable = ["name", "email", "profile", "role"];
 
     use Notifiable; // Para receber emails
+    use SoftDeletes;
 
     public function detail()
     {

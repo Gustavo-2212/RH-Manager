@@ -1,19 +1,19 @@
-<x-layout-app pageTitle="Colaboradores RH">
-
+<x-layout-app pageTitle="Colaboradores">
     <div class="w-100 p-4">
 
-        <h3>Recursos Humanos</h3>
+        <h3>Colaboradores</h3>
 
         <hr>
 
         @if($colaborators->count() === 0)
             <div class="text-center my-5">
                 <p>Nenhum colaborador encontrado.</p>
-                <a href="{{ route("rh_user.add_colaborator") }}" class="btn btn-primary">Criar um novo colaborador</a>
+
+                <a href="{{ route("rh_user.management.add_colaborator") }}" class="btn btn-primary">Criar colaborador</a>
             </div>
         @else
             <div class="mb-3">
-                <a href="{{ route("rh_user.add_colaborator") }}" class="btn btn-primary">Criar um novo colaborador</a>
+                <a href="{{ route("rh_user.management.add_colaborator") }}" class="btn btn-primary">Criar colaborador</a>
             </div>
 
             <table class="table" id="table">
@@ -21,7 +21,8 @@
                     <th>Colaborador</th>
                     <th>E-mail</th>
                     <th>Função</th>
-                    <th>Permissões</th>
+                    <th>Ativo</th>
+                    <th>Departamento</th>
                     <th>Salário</th>
                     <th>Data de Adimissão</th>
                     <th>Cidade</th>
@@ -34,27 +35,28 @@
                             <td>{{ $colaborator["email"] }}</td>
                             <td>{{ $colaborator["role"] }}</td>
 
-                            @php
-                                $permissions = json_decode($colaborator["permissions"]);
-                            @endphp
+                            <td>
+                                @empty($colaborator->email_verified_at)
+                                    <span class="badge bg-danger">Não</span>
+                                @else
+                                    <span class="badge bg-success">Sim</span>
+                                @endif
+                            </td>
 
-                            <td>{{ implode(", ", $permissions) }}</td>
+                            <td>{{ $colaborator->department->name }}</td>
                             <td>R$ {{ $colaborator->detail->salary }}</td>
                             <td>{{ $colaborator->detail->admission_date }}</td>
                             <td>{{ $colaborator->detail->city }}</td>
 
                             <td>
-                                <div class="d-flex gap-1 justify-content-end">
+                                <div class="d-flex gap-3 justify-content-end">
                                     @if(empty($colaborator->deleted_at))
-                                        <a href="{{ route("rh_user.edit_rh_user", ["id" => $colaborator->id]) }}" class="btn btn-sm btn-outline-dark"><i class="fa-regular fa-pen-to-square me-2"></i>Editar</a>
-                                        <a href="{{ route("rh_user.delete", ["id" => $colaborator->id]) }}" class="btn btn-sm btn-outline-dark"><i class="fa-regular fa-trash-can me-2"></i>Deletar</a>
-                                        
+                                        <a href="{{ route("colaborator.detail", ["id" => $colaborator->id]) }}" class="btn btn-sm btn-outline-dark"><i class="fas fa-eye me-2"></i>Detalhes</a>
+                                        <a href="{{ route("colaborator.delete", ["id" => $colaborator->id]) }}" class="btn btn-sm btn-outline-dark"><i class="fa-regular fa-trash-can me-2"></i>Deletar</a>
                                     @else
-                                        
-                                            <a href="{{ route("rh_user.restore", ["id" => $colaborator->id]) }}" class="btn btn-sm btn-outline-danger"><i class="fa-solid fa-trash-arrow-up me-2"></i>Restaurar</a>
+                                        <a href="{{ route("colaborator.restore", ["id" => $colaborator->id]) }}" class="btn btn-sm btn-outline-danger"><i class="fa-solid"></i>Restaurar</a>
                                     @endif
                                 </div>
-
                             </td>
                         </tr>
                     @endforeach
@@ -62,7 +64,7 @@
             </table>
 
         @endif
-    </div>
 
+    </div>
 </x-layout-app>
 
