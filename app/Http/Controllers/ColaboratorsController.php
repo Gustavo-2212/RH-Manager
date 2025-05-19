@@ -62,4 +62,13 @@ class ColaboratorsController extends Controller
 
         return redirect()->route("colaborators");
     }
+
+    public function home()
+    {
+        Auth::user()->can("colaborator") ?: abort(403, "Você não tem permissão");
+
+        $colaborator = User::with("detail", "department")->where("id", Auth::user()->id)->first();
+
+        return view("colaborators.show-details", ["colaborator" => $colaborator]);
+    }
 }

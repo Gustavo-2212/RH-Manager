@@ -6,6 +6,7 @@
         <a href="{{ route("rh_users") }}"><i class="fas fa-user-gear me-3"></i>RH Colaboradores</a>
         <a href="{{ route("departments") }}"><i class="fas fa-industry me-3"></i>Departamentos</a>
     @endcan
+    <a href="{{ route("chat") }}"><i class="fas fa-comments me-3"></i>Chat</a>
     <hr>
     <a href="{{ route("user.profile") }}"><i class="fas fa-cog me-3"></i>Perfil Usuário</a>
     <hr>

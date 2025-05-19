@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Department;
+use App\Models\User;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -94,6 +95,8 @@ class DepartmentController extends Controller
 
         $department = Department::findOrFail($id);
         $department->delete();
+
+        User::where("department_id", $id)->update(["department_id" => null]);
 
         return redirect()->route("departments");
     }

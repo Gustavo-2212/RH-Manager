@@ -7,7 +7,7 @@
 
             <div class="mb-3">
                 <label for="name" class="form-label">Nome</label>
-                <input type="text" name="name" id="name" class="form-control">
+                <input type="text" name="name" id="name" class="form-control" value="{{ old("name", $colaborator->name) }}">
                 @error("name")
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
@@ -15,7 +15,7 @@
 
             <div class="mb-3">
                 <label for="email" class="form-label">E-mail</label>
-                <input type="email" name="email" id="email" class="form-control">
+                <input type="email" name="email" id="email" class="form-control" value="{{ old("email", $colaborator->email) }}">
             </div>
 
             <div class="text-center">
@@ -26,7 +26,7 @@
 
         @if(session("success_change_data"))
             <div class="alert alert-success mt-3">
-                {{ session("success") }}
+                {{ session("success_change_data") }}
             </div>
         @endif
 

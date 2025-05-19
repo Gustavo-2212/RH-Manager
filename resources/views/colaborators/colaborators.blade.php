@@ -43,7 +43,7 @@
                                 @endif
                             </td>
 
-                            <td>{{ $colaborator->department->name }}</td>
+                            <td>{{ $colaborator->department->name ?? "-" }}</td>
                             <td>R$ {{ $colaborator->detail->salary }}</td>
                             <td>{{ $colaborator->detail->admission_date }}</td>
                             <td>{{ $colaborator->detail->city }}</td>
@@ -51,10 +51,11 @@
                             <td>
                                 <div class="d-flex gap-3 justify-content-end">
                                     @if(empty($colaborator->deleted_at))
-                                        <a href="{{ route("colaborator.detail", ["id" => $colaborator->id]) }}" class="btn btn-sm btn-outline-dark"><i class="fas fa-eye me-2"></i>Detalhes</a>
-                                        <a href="{{ route("colaborator.delete", ["id" => $colaborator->id]) }}" class="btn btn-sm btn-outline-dark"><i class="fa-regular fa-trash-can me-2"></i>Deletar</a>
+                                        <a href="{{ route("rh_user.management.edit_colaborator", ["id" => $colaborator->id]) }}" class="btn btn-sm btn-outline-dark"><i class="fa-regular fa-pen-to-square me-2"></i>Editar</a>
+                                        <a href="{{ route("rh_user.management.detail", ["id" => $colaborator->id]) }}" class="btn btn-sm btn-outline-dark"><i class="fas fa-eye me-2"></i>Detalhes</a>
+                                        <a href="{{ route("rh_user.management.delete", ["id" => $colaborator->id]) }}" class="btn btn-sm btn-outline-dark"><i class="fa-regular fa-trash-can me-2"></i>Deletar</a>
                                     @else
-                                        <a href="{{ route("colaborator.restore", ["id" => $colaborator->id]) }}" class="btn btn-sm btn-outline-danger"><i class="fa-solid"></i>Restaurar</a>
+                                        <a href="{{ route("rh_user.management.restore", ["id" => $colaborator->id]) }}" class="btn btn-sm btn-outline-danger"><i class="fa-solid fa-trash-arrow-up"></i>Restaurar</a>
                                     @endif
                                 </div>
                             </td>

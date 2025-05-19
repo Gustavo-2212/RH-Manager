@@ -3,14 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
     public function index(): View
     {
-        return view("user.profile");
+        $colaborator = User::with("detail", "department")->findOrFail(auth()->user()->id);
+
+        return view("user.profile", ["colaborator" => $colaborator]);
     }
 
     public function change_password(Request $request)
@@ -45,5 +49,29 @@ class ProfileController extends Controller
         $user->save();
 
         return redirect()->back()->with(["success_change_data" => "Dados alterados com sucesso"]);
+    }
+
+    public function change_details(Request $request)
+    {
+        $request->validate([
+            "address" => ["required", "string", "max:250"],
+            "zip_code" => ["required", "string", "max:10"],
+            "city" => ["required", "string", "max:50"],
+            "phone" => ["required", "string", "max:50"],
+            "salary" => ["required", "decimal:2"],
+            "admission_date" => ["required", "date_format:Y-m-d"]
+        ]);
+
+        $user = auth()->user();
+        $user->detail->address = $request->address;
+        $user->detail->zip_code = $request->zip_code;
+        $user->detail->city = $request->city;
+        $user->detail->phone = $request->phone;
+        $user->detial->salary = $request->salary;
+        $user->detail->admission_date = $request->admission_date;
+
+        $user->detail->save();
+
+        return redirect()->back()->with(["success_change_details" => "Dados alterados com sucesso"]);
     }
 }

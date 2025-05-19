@@ -23,4 +23,14 @@ class User extends Authenticable
     {
         return $this->belongsTo(Department::class);
     }
+
+    public function sent_messages()
+    {
+        return $this->hasMany(Message::class, "user_sender_id");
+    }
+
+    public function received_messages()
+    {
+        return $this->hasMany(Message::class, "user_receiver_id");
+    }
 }

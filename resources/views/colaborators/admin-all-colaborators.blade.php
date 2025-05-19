@@ -37,14 +37,14 @@
                                 @endif
                             </td>
 
-                            <td>{{ $colaborator->department->name }}</td>
+                            <td>{{ $colaborator->department->name ?? "-" }}</td>
                             <td>R$ {{ $colaborator->detail->salary }}</td>
                             <td>{{ $colaborator->detail->admission_date }}</td>
                             <td>{{ $colaborator->detail->city }}</td>
 
                             <td>
                                 <div class="d-flex gap-3 justify-content-end">
-                                    @if(empty($colaborator->deleted_at)) 
+                                    @if(empty($colaborator->deleted_at))
                                         <a href="{{ route("colaborator.detail", ["id" => $colaborator->id]) }}" class="btn btn-sm btn-outline-dark"><i class="fas fa-eye me-2"></i>Detalhes</a>
                                         <a href="{{ route("colaborator.delete", ["id" => $colaborator->id]) }}" class="btn btn-sm btn-outline-dark"><i class="fa-regular fa-trash-can me-2"></i>Deletar</a>
                                     @else
