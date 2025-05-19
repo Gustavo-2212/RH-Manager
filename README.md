@@ -11,7 +11,7 @@
 
 ## 📘 Visão Geral
 
-**RH-Manager** é um sistema de gerenciamento de recursos humanos desenvolvido em Laravel, com foco em facilitar a administração de dados de funcionários, departamentos, permissões de acesso e outras funcionalidades comuns ao setor de RH. A aplicação possui um backend robusto em PHP utilizando o framework Laravel, e frontend moderno com Bootstrap e Vite.
+**RH-Manager** é um sistema de gerenciamento de recursos humanos desenvolvido em Laravel, com foco em facilitar a administração de dados de funcionários, departamentos, permissões de acesso e outras funcionalidades comuns ao setor de RH. A aplicação possui um backend feito em PHP utilizando o framework Laravel, e frontend com Bootstrap e Vite, usando javascript vanilla.
 
 ---
 
@@ -109,6 +109,7 @@ Usuário comum (funcionário), com acesso limitado às funcionalidades voltadas 
 - 💬 Acesso ao **chat interno**
 
 ### 📁 Estrutura do Projeto
+```bash
 RH-Manager/
 ├── app/                 # Lógica de negócio (Models, Controllers, Policies)
 ├── bootstrap/           # Inicialização do Laravel
@@ -125,7 +126,7 @@ RH-Manager/
 ├── package.json         # Dependências JS
 ├── vite.config.js       # Configurações do Vite
 └── README.md            # Este arquivo
-
+```
 ### 👤 Autor
 
 **[Gustavo Alves](https://github.com/Gustavo-2212)**
