@@ -1,66 +1,131 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# RH-Manager
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+![PHP](https://img.shields.io/badge/PHP-8.1%2B-777bb4)
+![Laravel](https://img.shields.io/badge/Laravel-12.x-red?logo=laravel&logoColor=white)
+![Bootstrap](https://img.shields.io/badge/Bootstrap-5.x-7952B3?logo=bootstrap&logoColor=white)
+![MySQL](https://img.shields.io/badge/MySQL-5.7%2B-00758F?logo=mysql&logoColor=white)
+![Composer](https://img.shields.io/badge/Composer-2.x-885630?logo=composer&logoColor=white)
+![Node.js](https://img.shields.io/badge/Node.js-18.x-339933?logo=nodedotjs&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-5.x-646CFF?logo=vite&logoColor=white)
 
-## About Laravel
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 📘 Visão Geral
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+**RH-Manager** é um sistema de gerenciamento de recursos humanos desenvolvido em Laravel, com foco em facilitar a administração de dados de funcionários, departamentos, permissões de acesso e outras funcionalidades comuns ao setor de RH. A aplicação possui um backend robusto em PHP utilizando o framework Laravel, e frontend moderno com Bootstrap e Vite.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## 🛠️ Tecnologias Utilizadas
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+| Ferramenta   | Versão Sugerida | Descrição                                      |
+|--------------|------------------|-----------------------------------------------|
+| PHP          | 8.1+             | Linguagem backend principal                   |
+| Laravel      | 12.x             | Framework MVC em PHP                          |
+| MySQL        | 5.7+             | Banco de dados relacional                     |
+| Composer     | 2.x              | Gerenciador de pacotes PHP                    |
+| Node.js/NPM  | 18.x / 9.x       | Gerenciador de pacotes JS                     |
+| Bootstrap    | 5.x              | Framework CSS para design responsivo          |
+| Vite         | 5.x              | Build tool para frontend                      |
+| PHPUnit      | 10.x             | Testes automatizados para PHP                 |
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+---
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## ⚙️ Instalação e Configuração
 
-## Laravel Sponsors
+### 🔧 Pré-requisitos
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+- PHP >= 8.1
+- Composer
+- Node.js >= 18.x
+- MySQL
+- NPM
 
-### Premium Partners
+### 🧭 Passo a Passo
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+1. **Clonar o repositório**
+```bash
+git clone https://github.com/Gustavo-2212/RH-Manager.git
+cd RH-Manager
+```
 
-## Contributing
+2. Instalar dependências PHP
+```bash
+composer install
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+3. Instalar dependências Javascript
+```bash
+npm install
+```
 
-## Code of Conduct
+4. Criar o arquivo de ambiente (ou usar o que está disponibilizado no github, lembrando de alterar as variáveis referentes a conexão com banco de dados que esteja usando)
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+5. Executar migrations e seeders (criação das tabelas e suas relações, bem como populando as tabelas com alguns registros padrões, a saber: admin user, departamentos como administração e RH)
+```bash
+php artisan migrate --seed
+```
 
-## Security Vulnerabilities
+6. Compilar os assets usados
+```bash
+npm run dev
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+7. Subindo o servidor da aplicação [http://localhost:8000](http://localhost:8000)
+```bash
+php artisan serve
+```
 
-## License
+8. Baixar e executar Mailhog, para subir o servidor de e-mails para o uso da aplicação (lembre de alterar as variáveis de ambiente em .env para usá-lo) - [MailHog](https://github.com/mailhog/MailHog)
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+### 🔐 Níveis de Acesso e Permissões
+
+O sistema simula de maneira clara e funcional o ambiente de Recursos Humanos de uma empresa, com tarefas essenciais como **cadastro**, **edição** e **remoção de colaboradores**. Para isso, implementa **três níveis distintos de acesso**, cada um com permissões específicas:
+
+### 👑 Admin
+
+O usuário com acesso total ao sistema. Pode administrar toda a estrutura de usuários e departamentos da empresa.
+
+**Permissões:**
+- ✅ CRUD completo de usuários do tipo **RH User**
+- ✅ Gerenciamento completo dos **departamentos** da empresa
+- 💬 Acesso ao **chat interno** (funcionalidade extra implementada além do escopo original do curso na Udemy)
+
+### 🧑‍💼 RH User
+
+Usuário do setor de Recursos Humanos, com permissões voltadas à gestão de colaboradores.
+
+**Permissões:**
+- ✅ CRUD completo de usuários do tipo **Colaborator**
+- 📝 Edição do **próprio perfil**
+- 💬 Acesso ao **chat interno**
+
+### 👤 Colaborator User
+
+Usuário comum (funcionário), com acesso limitado às funcionalidades voltadas à sua própria conta.
+
+**Permissões:**
+- 📝 Edição do **próprio perfil**
+- 💬 Acesso ao **chat interno**
+
+### 📁 Estrutura do Projeto
+RH-Manager/
+├── app/                 # Lógica de negócio (Models, Controllers, Policies)
+├── bootstrap/           # Inicialização do Laravel
+├── config/              # Arquivos de configuração
+├── database/            # Migrations, Seeders, Factories
+├── public/              # Assets acessíveis publicamente
+├── resources/           # Views (Blade), SCSS, JS
+├── routes/              # Rotas web e API
+├── storage/             # Arquivos gerados e logs
+├── tests/               # Testes com PHPUnit
+├── .env.example         # Configurações de ambiente
+├── artisan              # CLI do Laravel
+├── composer.json        # Dependências PHP
+├── package.json         # Dependências JS
+├── vite.config.js       # Configurações do Vite
+└── README.md            # Este arquivo
+
+### 👤 Autor
+
+**[Gustavo Alves](https://github.com/Gustavo-2212)**
