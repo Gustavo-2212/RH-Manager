@@ -40,12 +40,22 @@ class ProfileController extends Controller
     {
         $request->validate([
             "name" => ["required", "min:3", "max:255"],
-            "email" => ["required", "email", "max:255", "unique:users,email," . auth()->id()]
+            "email" => ["required", "email", "max:255", "unique:users,email," . auth()->id()],
+            "file_image_path" => ["image", "nullable", "max:2048"]
         ]);
 
         $user = auth()->user();
         $user["name"] = $request["name"];
         $user["email"] = $request["email"];
+        
+        if ($request->file_image_path)
+        {
+            $extension = $request->file("file_image_path")->getClientOriginalExtension();
+            $path = $request->file_image_path->storeAs("users", "{$user->name}_" . now()->format("d_m_Y_H_i") . ".{$extension}");
+
+            $user["image"] = $path;
+        }
+        
         $user->save();
 
         return redirect()->back()->with(["success_change_data" => "Dados alterados com sucesso"]);

@@ -47,10 +47,10 @@ class RHUserController extends Controller
             "city" => ["required", "string", "max:50"],
             "phone" => ["required", "string", "max:50"],
             "salary" => ["required", "decimal:2"],
-            "admission_date" => ["required", "date_format:Y-m-d"]
+            "admission_date" => ["required", "date_format:Y-m-d"],
+            "file_image_path" => ["image", "nullable", "max:2048"]
         ]);
-
-
+        
         $user = new User();
         $user["name"] = $request["name"];
         $user["email"] = $request["email"];
@@ -58,6 +58,14 @@ class RHUserController extends Controller
         $user["role"] = "rh";
         $user["department_id"] = $request["select_department"];
         $user["permissions"] = '["rh"]';
+
+        if ($request->file_image_path)
+        {
+            $extension = $request->file("file_image_path")->getClientOriginalExtension();
+            $path = $request->file_image_path->storeAs("users", "{$user->name}_" . now()->format("d_m_Y_H_i") . ".{$extension}");
+            
+            $user["image"] = $path;
+        }
 
         $user->save();
 

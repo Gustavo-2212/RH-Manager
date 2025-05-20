@@ -1,6 +1,6 @@
 <div class="col-3">
     <div class="border p-5 shadow-sm">
-        <form action="{{ route("user.profile.change_data") }}" method="POST">
+        <form action="{{ route("user.profile.change_data") }}" method="POST" enctype="multipart/form-data">
             @csrf
 
             <h3>Alterar dados</h3>
@@ -16,6 +16,16 @@
             <div class="mb-3">
                 <label for="email" class="form-label">E-mail</label>
                 <input type="email" name="email" id="email" class="form-control" value="{{ old("email", $colaborator->email) }}">
+                @error("email")
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <div class="mb-3">
+                <x-profile-user-change-image :image="$colaborator->image"/>
+                @error("file_image_path")
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
             </div>
 
             <div class="text-center">

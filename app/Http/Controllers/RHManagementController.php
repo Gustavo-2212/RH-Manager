@@ -49,7 +49,8 @@ class RHManagementController extends Controller
             "city" => ["required", "string", "max:50"],
             "phone" => ["required", "string", "max:50"],
             "salary" => ["required", "decimal:2"],
-            "admission_date" => ["required", "date_format:Y-m-d"]
+            "admission_date" => ["required", "date_format:Y-m-d"],
+            "file_image_path" => ["image", "nullable", "max:2048"]
         ]);
 
         $user = new User();
@@ -61,6 +62,14 @@ class RHManagementController extends Controller
         $user["department_id"] = $request["select_department"];
         $user["confirmation_token"] = Str::random(60);
 
+        if ($request->file_image_path)
+        {
+            $extension = $request->file("file_image_path")->getClientOriginalExtension();
+            $path = $request->file_image_path->storeAs("users", "{$user->name}_" . now()->format("d_m_Y_H_i") . ".{$extension}");
+
+            $user["image"] = $path;
+        }
+        
         $user->save();
 
         $user->detail()->create([

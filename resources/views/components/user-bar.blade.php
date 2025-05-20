@@ -9,7 +9,17 @@
     </div>
 
     <div class="d-flex align-items-center">
-        <i class="fas fa-user-circle me-3"></i>
+        {{-- <i class="fas fa-user-circle me-3"></i> --}}
+        <div class="d-flex justify-content-start gap-5 align-items-center">
+            @if (auth()->user()->image)
+                @php
+                    $image = auth()->user()->image;    
+                @endphp
+                <img src="{{ url("storage/{$image}") }}" class="rounded-circle d-block me-3 text-white" style="width: 30px; height: 30px; object-fit: cover;" alt="profile_{{auth()->user()->name}}">
+            @else
+                <img src="{{ url("storage/users/default.png") }}" class="rounded-circle me-2 d-block" style="width: 30px; height: 30px; object-fit: cover; filter: invert(1);" alt="profile_{{auth()->user()->name}}">
+            @endif
+        </div>
         <a href="{{ route("user.profile") }}" class="text-primary-white me-3">
             {{ auth()->user()->name }}
         </a>

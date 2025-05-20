@@ -31,11 +31,20 @@
                 <tbody>
                     @foreach ($colaborators as $colaborator)
                         <tr class="table-light">
-                            <td>[{{ $colaborator["name"] }}]</td>
-                            <td>{{ $colaborator["email"] }}</td>
-                            <td>{{ $colaborator["role"] }}</td>
+                            <td class="align-middle">
+                                <div class="d-flex justify-content-start gap-5 align-items-center">
+                                    @if ($colaborator->image)
+                                        <img src="{{ url("storage/{$colaborator->image}") }}" class="rounded-circle d-block" style="width: 60px; height: 60px; object-fit: cover;" alt="profile_{{$colaborator->name}}">
+                                    @else
+                                        <img src="{{ url("storage/users/default.png") }}" class="rounded-circle d-block" style="width: 60px; height: 60px; object-fit: cover;" alt="profile_{{$colaborator->name}}">
+                                    @endif
+                                    [{{ $colaborator["name"] }}]
+                                </div>
+                            </td>
+                            <td class="align-middle">{{ $colaborator["email"] }}</td>
+                            <td class="align-middle">{{ $colaborator["role"] }}</td>
 
-                            <td>
+                            <td class="align-middle">
                                 @empty($colaborator->email_verified_at)
                                     <span class="badge bg-danger">Não</span>
                                 @else
@@ -43,12 +52,12 @@
                                 @endif
                             </td>
 
-                            <td>{{ $colaborator->department->name ?? "-" }}</td>
-                            <td>R$ {{ $colaborator->detail->salary }}</td>
-                            <td>{{ $colaborator->detail->admission_date }}</td>
-                            <td>{{ $colaborator->detail->city }}</td>
+                            <td class="align-middle">{{ $colaborator->department->name ?? "-" }}</td>
+                            <td class="align-middle">R$ {{ $colaborator->detail->salary }}</td>
+                            <td class="align-middle">{{ $colaborator->detail->admission_date }}</td>
+                            <td class="align-middle">{{ $colaborator->detail->city }}</td>
 
-                            <td>
+                            <td class="align-middle">
                                 <div class="d-flex gap-3 justify-content-end">
                                     @if(empty($colaborator->deleted_at))
                                         <a href="{{ route("rh_user.management.edit_colaborator", ["id" => $colaborator->id]) }}" class="btn btn-sm btn-outline-dark"><i class="fa-regular fa-pen-to-square me-2"></i>Editar</a>
